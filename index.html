@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Love Story for You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      background: radial-gradient(circle, rgba(139, 0, 0, 0.7), rgba(255, 255, 255, 0.1)); /* Dark red gradient */
+      animation: glowBackground 3s infinite alternate;
+    }
+
+    @keyframes glowBackground {
+      0% {
+        background: radial-gradient(circle, rgba(139, 0, 0, 0.7), rgba(255, 255, 255, 0.1));
+      }
+      50% {
+        background: radial-gradient(circle, rgba(155, 0, 0, 0.8), rgba(255, 255, 255, 0.2));
+      }
+      100% {
+        background: radial-gradient(circle, rgba(139, 0, 0, 0.8), rgba(255, 255, 255, 0.1));
+      }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 50px;
+      border-radius: 25px;
+      box-shadow: 0 0 30px rgba(139, 0, 0, 0.4);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      opacity: 0;
+      transform: scale(0.95);
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    .card.active {
+      opacity: 1;
+      transform: scale(1);
+      position: relative;
+    }
+
+    .message {
+      font-family: 'Great Vibes', cursive;
+      font-size: 48px;  /* Increased font size */
+      margin-bottom: 30px;
+      color: #b22222; /* Dark red color for the message */
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .photo img {
+      max-width: 100%;
+      border-radius: 20px;
+      border: 3px solid #b22222; /* Dark red border for the photo */
+      margin-top: 20px;
+      box-shadow: 0 0 20px #b22222; /* Dark red shadow */
+    }
+
+    .heart {
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 40px;  /* Increased size of hearts */
+      color: #b22222; /* Dark red hearts */
+      animation: fall 3s infinite ease-in;
+    }
+
+    @keyframes fall {
+      0% {
+        top: -50px;
+        opacity: 1;
+      }
+      100% {
+        top: 100vh;
+        opacity: 0;
+      }
+    }
+
+    /* Button hidden as we are using click-to-advance */
+    button {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Falling Love Hearts -->
+<div class="heart" style="left: 10%;">❤️</div>
+<div class="heart" style="left: 30%;">💖</div>
+<div class="heart" style="left: 50%;">💕</div>
+<div class="heart" style="left: 70%;">💓</div>
+<div class="heart" style="left: 90%;">💝</div>
+
+<div class="container">
+  <!-- Card 1 -->
+  <div class="card active">
+    <div class="message">From my heart to yours... ❤️</div>
+    <audio id="voice1" src="Voice 001.mp3" loop></audio>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="card">
+    <div class="message">Every moment with you is a gift. 🎁</div>
+    <audio id="voice2" src="Voice 002.mp3" loop></audio>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="card">
+    <div class="message">Your smile is my favorite sunrise. 🌅</div>
+    <audio id="voice3" src="Voice 003.mp3" loop></audio>
+  </div>
+
+  <!-- Card 4 -->
+  <div class="card">
+    <div class="message">I don’t just like you, I’m deeply in love with you. 💖</div>
+    <audio id="voice4" src="Voice 004.mp3" loop></audio>
+  </div>
+
+  <!-- Card 5 -->
+  <div class="card">
+    <div class="message">You are my today, tomorrow, and forever. 💍</div>
+    <audio id="voice5" src="Voice 005.mp3" loop></audio>
+  </div>
+
+  <!-- Card 6 - Photo -->
+  <div class="card">
+    <div class="message">Just one look at you, and everything feels right. 🥰</div>
+    <audio id="voice6" src="Voice 006.mp3" loop></audio>
+    <div class="photo">
+      <img src="IMG-20250505-WA0012.jpg" alt="Her Photo">
+    </div>
+  </div>
+</div>
+
+<script>
+  const cards = document.querySelectorAll('.card');
+  let current = 0;
+
+  // Function to handle the card transition and play voice automatically
+  document.body.addEventListener('click', function() {
+    if (current < cards.length - 1) {
+      cards[current].classList.remove('active');
+      current++;
+      cards[current].classList.add('active');
+      playVoice(current + 1); // Play the voice for the current card automatically
+    }
+  });
+
+  // Function to play the voice for the card
+  function playVoice(num) {
+    const voice = document.getElementById('voice' + num);
+    if (voice) {
+      voice.currentTime = 0;  // Reset the audio to start from the beginning
+      voice.play();
+
+      // Wait for the audio to finish, then trigger the next message
+      voice.addEventListener('ended', function() {
+        if (current < cards.length - 1) {
+          cards[current].classList.remove('active');
+          current++;
+          cards[current].classList.add('active');
+          playVoice(current + 1); // Play the voice for the next card
+        }
+      });
+    }
+  }
+
+  // Play the first voice automatically when the page loads
+  window.onload = () => {
+    playVoice(1);
+  };
+</script>
+
+</body>
+</html>
