@@ -59,7 +59,7 @@
   <button onclick="changeMessage()">Tap to see how much I love you</button>
 
   <!-- Background Music -->
-  <audio autoplay loop>
+  <audio id="bgMusic" loop>
     <source src="love.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
@@ -73,9 +73,18 @@
       "Please forgive me, my love 😢"
     ];
     let index = 0;
+    let musicStarted = false;
+
     function changeMessage() {
+      // Change message
       index = (index + 1) % messages.length;
       document.getElementById("message").innerText = messages[index];
+
+      // Start music on first click
+      if (!musicStarted) {
+        document.getElementById("bgMusic").play();
+        musicStarted = true;
+      }
     }
   </script>
 </body>
